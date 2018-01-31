@@ -1,0 +1,189 @@
+<?php
+
+namespace MocaBonita\model;
+
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
+use MocaBonita\tools\eloquent\MbModel;
+
+/**
+ * Main class of the MocaBonita User
+ *
+ * @author    Jhordan Lima <jhorlima@icloud.com>
+ * @category  WordPress
+ * @package   \MocaBonita\model
+ *
+ * @copyright Jhordan Lima 2017
+ * @copyright Divisão de Projetos e Desenvolvimento - DPD
+ * @copyright Núcleo de Tecnologia da Informação - NTI
+ * @copyright Universidade Estadual do Maranhão - UEMA
+ *
+ */
+class MbWpUser extends MbModel
+{
+
+    /**
+     * Stores the rule attribute name
+     *
+     * @var string
+     */
+    const RULE_ATTR_DEFAULT = "rule_user";
+
+    /**
+     * Stores the current User
+     *
+     * @var MbWpUser
+     */
+    protected static $currentUser = null;
+
+    /**
+     * Stores the custom rule attribute name
+     *
+     * @var string
+     */
+    protected static $ruleAttr = null;
+
+    /**
+     * Stored table primarykey
+     *
+     * @var string
+     */
+    protected $primaryKey = 'ID';
+
+    /**
+     * Stored if table has timestamps
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * Date elements
+     *
+     * @var array
+     */
+    protected $dates = [
+        'user_registered',
+    ];
+
+    /**
+     * Fillable elements
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_login',
+        'user_pass',
+        'user_nicename',
+        'user_email',
+        'user_url',
+        'user_registered',
+        'user_status',
+        'display_name',
+    ];
+
+    /**
+     * Hidden elementes
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'user_pass',
+        'user_activation_key',
+        'user_status',
+    ];
+
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'user_registered' => 'datetime',
+    ];
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return $this->getWpdb()->prefix . "users";
+    }
+
+    /**
+     * Get rule attr
+     *
+     * @return string
+     */
+    public static function getRuleAttr()
+    {
+        return is_null(self::$ruleAttr) ? self::RULE_ATTR_DEFAULT : self::$ruleAttr;
+    }
+
+    /**
+     * Set rule attr
+     *
+     * @param string $ruleAttr
+     */
+    public static function setRuleAttr($ruleAttr)
+    {
+        self::$ruleAttr = $ruleAttr;
+    }
+
+    /**
+     * Get user meta
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function metas()
+    {
+        return $this->hasMany(MbWpUserMeta::class, 'user_id');
+    }
+
+    /**
+     * Get current user logged
+     *
+     * @return MbWpUser
+     */
+    public static function getCurrentUser()
+    {
+        if (is_null(self::$currentUser)) {
+            self::$currentUser = self::findOrFail(get_current_user_id());
+        }
+
+        return self::$currentUser;
+    }
+
+    /**
+     * Add user rule
+     *
+     * @param string $rule
+     *
+     * @return MbWpUser
+     */
+    public function addRule($rule)
+    {
+        update_user_meta($this->getKey(), self::getRuleAttr(), $rule);
+
+        return $this;
+    }
+
+    /**
+     * Check user rule
+     *
+     * @param string[]|null $rules
+     *
+     * @return bool
+     */
+    public function checkRules($rules)
+    {
+        if (is_array($rules)) {
+            return in_array(get_user_meta($this->getKey(), self::getRuleAttr(), true), $rules);
+        } else {
+            return true;
+        }
+    }
+}

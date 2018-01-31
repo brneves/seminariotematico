@@ -1,0 +1,6 @@
+{
+    "require": {
+        "jhorlima/wp-mocabonita": "3.3.2.7",
+        "jhorlima/siguema": "^1.1"
+    }
+}

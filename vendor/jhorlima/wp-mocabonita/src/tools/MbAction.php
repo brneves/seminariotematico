@@ -1,0 +1,489 @@
+<?php
+
+namespace MocaBonita\tools;
+
+use Illuminate\Support\Str;
+
+/**
+ * Main class of the MocaBonita ActionPage
+ *
+ * @author    Jhordan Lima <jhorlima@icloud.com>
+ * @category  WordPress
+ * @package   \MocaBonita\tools
+ *
+ * @copyright Jhordan Lima 2017
+ * @copyright Divisão de Projetos e Desenvolvimento - DPD
+ * @copyright Núcleo de Tecnologia da Informação - NTI
+ * @copyright Universidade Estadual do Maranhão - UEMA
+ *
+ */
+class MbAction
+{
+    /**
+     * Current MbPage
+     *
+     * @var MbPage
+     */
+    protected $mbPage;
+
+    /**
+     * Action name
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * Check if action needs login
+     *
+     * @var bool
+     */
+    protected $requiresLogin;
+
+    /**
+     * Check if action needs ajax
+     *
+     * @var bool
+     */
+    protected $requiresAjax;
+
+    /**
+     * Requisition method required
+     *
+     * @var string
+     */
+    protected $requiresMethod;
+
+    /**
+     * Controller function name
+     *
+     * @var string
+     */
+    protected $functionName;
+
+    /**
+     * Function complement name
+     *
+     * @var string
+     */
+    protected $functionComplement;
+
+    /**
+     * Check if action is a shortcode
+     *
+     * @var bool
+     */
+    protected $shortcode;
+
+    /**
+     * Stores the capability of the action
+     *
+     * @var string
+     */
+    protected $capability;
+
+    /**
+     * Page rules
+     *
+     * @var string[]
+     */
+    protected $rules;
+
+    /**
+     * Stores data to return
+     *
+     * @var mixed
+     */
+    protected $data;
+
+    /**
+     * Stores the callback to return
+     *
+     * @var \Closure
+     */
+    protected $callback;
+
+    /**
+     * Required parameters
+     *
+     * @var string[]
+     */
+    protected $requiredParams;
+
+    /**
+     * Get MbPage
+     *
+     * @return MbPage
+     *
+     * @throws MBException
+     */
+    public function getMbPage()
+    {
+        if (is_null($this->mbPage)) {
+            throw new MbException("Nenhuma página foi definida para essa ação!");
+        }
+
+        return $this->mbPage;
+    }
+
+    /**
+     * Set MbPage
+     *
+     * @param MbPage $mbPage
+     *
+     * @return MbAction
+     */
+    public function setMbPage(MbPage $mbPage)
+    {
+        $this->mbPage = $mbPage;
+
+        return $this;
+    }
+
+    /**
+     * Get action name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set action name
+     *
+     * @param string $name
+     *
+     * @return MbAction
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Is requires login
+     *
+     * @return boolean
+     */
+    public function isRequiresLogin()
+    {
+        return $this->requiresLogin;
+    }
+
+    /**
+     * Set requires login
+     *
+     * @param boolean $requiresLogin
+     *
+     * @return MbAction
+     */
+    public function setRequiresLogin($requiresLogin = true)
+    {
+        $this->requiresLogin = $requiresLogin;
+
+        return $this;
+    }
+
+    /**
+     * Is requires ajax
+     *
+     * @return boolean
+     */
+    public function isRequiresAjax()
+    {
+        return $this->requiresAjax;
+    }
+
+    /**
+     * Set requires ajax
+     *
+     * @param boolean $requiresAjax
+     *
+     * @return MbAction
+     */
+    public function setRequiresAjax($requiresAjax = true)
+    {
+        $this->requiresAjax = $requiresAjax;
+
+        return $this;
+    }
+
+    /**
+     * Get requires method
+     *
+     * @return string
+     */
+    public function getRequiresMethod()
+    {
+        return $this->requiresMethod;
+    }
+
+    /**
+     * Set requires method, if it's null, then will be agreed all method
+     *
+     * @param string|null $requiresMethod
+     *
+     * @return MbAction
+     */
+    public function setRequiresMethod($requiresMethod = "GET")
+    {
+        $this->requiresMethod = $requiresMethod;
+
+        return $this;
+    }
+
+    /**
+     * Get function name
+     *
+     * @return string
+     */
+    public function getFunctionName()
+    {
+        return $this->functionName;
+    }
+
+    /**
+     * Set function name
+     *
+     * @param string $functionName
+     *
+     * @return MbAction
+     */
+    public function setFunctionName($functionName)
+    {
+        $this->functionName = $functionName;
+
+        return $this;
+    }
+
+    /**
+     * Get function complement
+     *
+     * @return string
+     */
+    public function getFunctionComplement()
+    {
+        return !is_null($this->functionComplement) ? $this->functionComplement : "";
+    }
+
+    /**
+     * Set function complement, if it's null, then will be removed the complement of the function
+     *
+     * @param string|null $functionComplement
+     *
+     * @return MbAction
+     */
+    public function setFunctionComplement($functionComplement = null)
+    {
+        $this->functionComplement = $functionComplement;
+
+        return $this;
+    }
+
+    /**
+     * Get function name with complement
+     *
+     * @return string
+     */
+    public function getFunction()
+    {
+        return $this->getFunctionName() . $this->getFunctionComplement();
+    }
+
+    /**
+     * Is shortcode
+     *
+     * @return boolean
+     */
+    public function isShortcode()
+    {
+        return $this->shortcode;
+    }
+
+    /**
+     * Set shortcode
+     *
+     * @param boolean $shortcode
+     *
+     * @return MbAction
+     */
+    public function setShortcode($shortcode = true)
+    {
+        $this->shortcode = $shortcode;
+
+        return $this;
+    }
+
+    /**
+     * Get capability
+     *
+     * @return string
+     */
+    public function getCapability()
+    {
+        return $this->capability;
+    }
+
+    /**
+     * Set capability
+     *
+     * @param string $capability
+     *
+     * @return MbAction
+     */
+    public function setCapability($capability = "read")
+    {
+        $this->capability = $capability;
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRules()
+    {
+        return $this->rules;
+    }
+
+    /**
+     * @param string[] $rules
+     *
+     * @return MbAction
+     */
+    public function setRules($rules)
+    {
+        $this->rules = $rules;
+
+        return $this;
+    }
+
+    /**
+     * @param string $rule
+     *
+     * @return MbAction
+     */
+    public function setRule($rule)
+    {
+        if (!is_array($this->rules)) {
+            $this->rules = [];
+        }
+        $this->rules[] = $rule;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return MbAction
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * @return \Closure
+     */
+    public function getCallback()
+    {
+        return $this->callback;
+    }
+
+    /**
+     * @param \Closure $callback
+     *
+     * @return MbAction
+     */
+    public function setCallback(\Closure $callback)
+    {
+        $this->callback = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRequiredParams()
+    {
+        return $this->requiredParams;
+    }
+
+    /**
+     * @param string[] $requiredParams
+     *
+     * @return MbAction
+     */
+    public function setRequiredParams(array $requiredParams)
+    {
+        $this->requiredParams = $requiredParams;
+
+        return $this;
+    }
+
+    /**
+     * @param string $require
+     *
+     * @return MbAction
+     */
+    public function setRequiredParam($require)
+    {
+        $this->requiredParams[] = $require;
+
+        return $this;
+    }
+
+    /**
+     * Action construct.
+     *
+     * @param MbPage $mbPage
+     * @param string $actionName
+     * @param bool   $requiresLogin
+     * @param bool   $requiresAjax
+     * @param string $requiresMethod
+     */
+    public function __construct(
+        MbPage $mbPage,
+        $actionName,
+        $requiresLogin = true,
+        $requiresAjax = false,
+        $requiresMethod = null
+    ) {
+        $this->setMbPage($mbPage)
+            ->setName($actionName)
+            ->setFunctionName(Str::camel($actionName))
+            ->setRequiresLogin($requiresLogin)
+            ->setRequiresAjax($requiresAjax)
+            ->setRequiresMethod($requiresMethod)
+            ->setFunctionComplement('Action')
+            ->setShortcode(false)
+            ->setRequiredParams([])
+            ->setCapability(null);
+    }
+
+    /**
+     * Check if the function exist
+     *
+     * @return boolean
+     */
+    public function functionExist()
+    {
+        return method_exists($this->mbPage->getController(), $this->getFunction());
+    }
+}

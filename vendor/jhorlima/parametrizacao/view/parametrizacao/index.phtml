@@ -1,0 +1,55 @@
+<div id="post-body-content">
+
+    <div class="meta-box-sortables ui-sortable">
+        <div class="postbox">
+            <div class="inside">
+                <table class="widefat">
+                    <thead>
+                    <tr>
+                        <th class="row-title">Parâmetros</th>
+                        <th>Valores</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <?php foreach ($this->getAttribute('parametros') as $parametro => $valor): ?>
+
+                    <tr>
+                        <th colspan="2">
+                            <form action="<?= $this->getAttribute('salvar') ?>" method="post">
+                                <label for="tablecell"><?= $parametro;?> (<?= gettype($valor)?>)</label>
+
+                                <input type="hidden" name="nome" value="<?= $parametro;?>" required/>
+
+                                <textarea name="valor" cols="80" rows="10" class="large-text"><?= is_array($valor) ? implode(PHP_EOL, $valor) : $valor ;?></textarea>
+
+                                <button class="button-primary" type="submit">
+                                    Salvar
+                                </button>
+                            </form>
+                        </th>
+                    </tr>
+
+                    <?php endforeach;; ?>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="postbox-container-1" class="postbox-container">
+    <div class="meta-box-sortables">
+        <div class="postbox">
+            <h2><span>Painel de Configuração</span></h2>
+            <div class="inside">
+                <p>
+                    Configure ao lado todos os parametros relacionados ao sistema.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

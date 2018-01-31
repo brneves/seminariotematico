@@ -1,0 +1,124 @@
+<?php
+
+namespace MocaBonita\tools;
+
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\View\View;
+use MocaBonita\MocaBonita;
+use MocaBonita\view\MbView;
+
+/**
+ * Main class of the MocaBonita Exception
+ *
+ * @author    Jhordan Lima <jhorlima@icloud.com>
+ * @category  WordPress
+ * @package   \MocaBonita\tools
+ * @copyright Jhordan Lima 2017
+ *
+ * @copyright Divisão de Projetos e Desenvolvimento - DPD
+ * @copyright Núcleo de Tecnologia da Informação - NTI
+ * @copyright Universidade Estadual do Maranhão - UEMA
+ *
+ */
+class MbException extends \Exception
+{
+
+    /**
+     * Stored wperror
+     *
+     * @var string[]
+     */
+    protected $messages;
+
+    /**
+     * Stored exception data
+     *
+     * @var null|array|Arrayable
+     */
+    protected $data;
+
+    /**
+     * Get exception data
+     *
+     * @return array|string
+     */
+    public function getData()
+    {
+        if ($this->data instanceof Arrayable) {
+            $this->data = $this->data->toArray();
+        }
+
+        if (!is_array($this->data)) {
+            $this->data = null;
+        }
+
+        return $this->data;
+    }
+
+    /**
+     * Set exception data
+     *
+     * @param array|Arrayable|View $data
+     *
+     * @return MbException
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * @return string[]|string
+     */
+    public function getMessages()
+    {
+        return !is_array($this->messages) ? [] : $this->messages;
+    }
+
+    /**
+     * @param $messages[]
+     *
+     * @return MbException
+     */
+    public function setMessages($messages)
+    {
+        $this->messages = $messages;
+
+        return $this;
+    }
+
+    /**
+     * PHP 5 allows developers to declare constructor methods for classes.
+     * Classes which have a constructor method call this method on each newly-created object,
+     * so it is suitable for any initialization that the object may need before it is used.
+     *
+     * Note: Parent constructors are not called implicitly if the child class defines a constructor.
+     * In order to run a parent constructor, a call to parent::__construct() within the child constructor is required.
+     *
+     * @param string                      $msg
+     * @param int                         $code
+     * @param null|array|MbView|Arrayable $dados
+     * @param \WP_Error                   $messages
+     *
+     * @link http://php.net/manual/en/language.oop5.decon.php
+     */
+    public function __construct($msg, $code = 400, $dados = null, $messages = null)
+    {
+        parent::__construct($msg, $code);
+
+        $this->setData($dados);
+        $this->setMessages($messages);
+    }
+
+    /**
+     * Post an error notice on the dashboard and save
+     *
+     * @param \Exception $e
+     */
+    public static function registerError(\Exception $e)
+    {
+        MocaBonita::getInstance()->getMbResponse()->adminNotice($e->getMessage(), 'error');
+    }
+}

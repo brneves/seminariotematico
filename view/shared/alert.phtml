@@ -1,0 +1,67 @@
+<?php if (!is_null($this->error)): ?>
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Fechar alerta">
+            <i aria-hidden="true">&times;</i>
+        </button>
+        <?php if (is_array($this->error)): ?>
+            <?php foreach ($this->error as $item => $errors): ?>
+                <?php foreach ($errors as $message): ?>
+                    <p><strong><?= $item ?></strong> : <?= $message ?></p>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <?= $this->error ?>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+
+<?php if (!is_null($this->success)): ?>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Fechar alerta">
+            <i aria-hidden="true">&times;</i>
+        </button>
+        <?php if (is_array($this->success)): ?>
+            <?php foreach ($this->success as $item => $success): ?>
+                <?php foreach ($success as $message): ?>
+                    <p><strong><?= $item ?></strong> : <?= $message ?></p>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p><?= $this->success ?></p>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+
+<?php if (!is_null($this->info)): ?>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Fechar alerta">
+            <i aria-hidden="true">&times;</i>
+        </button>
+        <?php if (is_array($this->info)): ?>
+            <?php foreach ($this->info as $item => $info): ?>
+                <?php foreach ($info as $message): ?>
+                    <p><strong><?= $item ?></strong> : <?= $message ?></p>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p><?= $this->info ?></p>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+
+<?php if (!is_null($this->warning)): ?>
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Fechar alerta">
+            <i aria-hidden="true">&times;</i>
+        </button>
+        <?php if (is_array($this->warning)): ?>
+            <?php foreach ($this->warning as $item => $warning): ?>
+                <?php foreach ($warning as $message): ?>
+                    <p><strong><?= $item ?></strong> : <?= $message ?></p>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p><?= $this->warning ?></p>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>

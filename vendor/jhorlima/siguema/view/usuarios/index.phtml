@@ -1,0 +1,27 @@
+<h2>Usuários SigUEMA</h2>
+
+<table class="widefat">
+    <thead>
+    <tr>
+        <th class="row-title">Nome</th>
+        <th>CPF</th>
+        <th>Tipo</th>
+        <th>Unidade</th>
+        <th>WPUser</th>
+        <th>Criado</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <?php foreach ($this->getAttribute('usuarios') as $usuario): ?>
+    <tr>
+        <td class="row-title"><label for="tablecell"><?= $usuario->nome; ?></label></td>
+        <td><?= $usuario->cpf_cnpj; ?></td>
+        <td><?= $usuario->tipo; ?></td>
+        <td><?= $usuario->unidade; ?></td>
+        <td><?= $usuario->wp_user_id; ?></td>
+        <td><?= $usuario->created_at; ?></td>
+    </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

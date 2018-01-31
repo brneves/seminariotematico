@@ -1,0 +1,27 @@
+{
+    "name": "jhorlima/parametrizacao",
+    "description": "Modulo Parametrização para o MocaBonita",
+    "version": "1.0.4",
+    "keywords": [
+        "wordpress",
+        "plugin",
+        "mocabonita",
+        "wp-mocabonita"
+    ],
+    "homepage": "https://github.com/jhorlima/parametrizacao",
+    "type": "wordpress-framework-plugin",
+    "authors": [
+        {
+            "name": "Jhordan Lima",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Parametrizacao\\": "./"
+        }
+    },
+    "require": {
+        "jhorlima/wp-mocabonita": ">=3.3.0"
+    }
+}
