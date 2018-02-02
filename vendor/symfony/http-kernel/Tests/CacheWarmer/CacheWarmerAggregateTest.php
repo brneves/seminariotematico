@@ -11,10 +11,9 @@
 
 namespace Symfony\Component\HttpKernel\Tests\CacheWarmer;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate;
 
-class CacheWarmerAggregateTest extends TestCase
+class CacheWarmerAggregateTest extends \PHPUnit_Framework_TestCase
 {
     protected static $cacheDir;
 
@@ -38,9 +37,6 @@ class CacheWarmerAggregateTest extends TestCase
         $aggregate->warmUp(self::$cacheDir);
     }
 
-    /**
-     * @group legacy
-     */
     public function testInjectWarmersUsingAdd()
     {
         $warmer = $this->getCacheWarmerMock();
@@ -52,9 +48,6 @@ class CacheWarmerAggregateTest extends TestCase
         $aggregate->warmUp(self::$cacheDir);
     }
 
-    /**
-     * @group legacy
-     */
     public function testInjectWarmersUsingSetWarmers()
     {
         $warmer = $this->getCacheWarmerMock();

@@ -4,20 +4,18 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit566cdcf709af42b682945bd07dd1f370
+class ComposerStaticInit72f7544fd90ee0e4ea6ec76efef342d6
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         '72579e7bd17821bb1321b87411366eae' => __DIR__ . '/..' . '/illuminate/support/helpers.php',
-        '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
-            'Symfony\\Polyfill\\Php70\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\VarDumper\\' => 28,
             'Symfony\\Component\\Translation\\' => 30,
@@ -48,7 +46,6 @@ class ComposerStaticInit566cdcf709af42b682945bd07dd1f370
             'Illuminate\\Session\\' => 19,
             'Illuminate\\Pagination\\' => 22,
             'Illuminate\\Http\\' => 16,
-            'Illuminate\\Filesystem\\' => 22,
             'Illuminate\\Database\\' => 20,
             'Illuminate\\Contracts\\' => 21,
             'Illuminate\\Container\\' => 21,
@@ -60,10 +57,6 @@ class ComposerStaticInit566cdcf709af42b682945bd07dd1f370
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Php70\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php70',
-        ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
@@ -136,10 +129,6 @@ class ComposerStaticInit566cdcf709af42b682945bd07dd1f370
         array (
             0 => __DIR__ . '/..' . '/illuminate/http',
         ),
-        'Illuminate\\Filesystem\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/illuminate/filesystem',
-        ),
         'Illuminate\\Database\\' => 
         array (
             0 => __DIR__ . '/..' . '/illuminate/database',
@@ -173,23 +162,16 @@ class ComposerStaticInit566cdcf709af42b682945bd07dd1f370
     );
 
     public static $classMap = array (
-        'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
-        'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
-        'DivisionByZeroError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
-        'Error' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/Error.php',
         'Mobile_Detect' => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
-        'ParseError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ParseError.php',
-        'SessionUpdateTimestampHandlerInterface' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',
-        'TypeError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/TypeError.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit566cdcf709af42b682945bd07dd1f370::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit566cdcf709af42b682945bd07dd1f370::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit566cdcf709af42b682945bd07dd1f370::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit566cdcf709af42b682945bd07dd1f370::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit72f7544fd90ee0e4ea6ec76efef342d6::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit72f7544fd90ee0e4ea6ec76efef342d6::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit72f7544fd90ee0e4ea6ec76efef342d6::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit72f7544fd90ee0e4ea6ec76efef342d6::$classMap;
 
         }, null, ClassLoader::class);
     }

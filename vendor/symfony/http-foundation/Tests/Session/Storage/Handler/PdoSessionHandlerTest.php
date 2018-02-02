@@ -11,14 +11,13 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\Session\Storage\Handler;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
 /**
  * @requires extension pdo_sqlite
  * @group time-sensitive
  */
-class PdoSessionHandlerTest extends TestCase
+class PdoSessionHandlerTest extends \PHPUnit_Framework_TestCase
 {
     private $dbFile;
 
@@ -141,7 +140,7 @@ class PdoSessionHandlerTest extends TestCase
         }
 
         $pdo = new MockPdo('pgsql');
-        $pdo->prepareResult = $this->getMockBuilder('PDOStatement')->getMock();
+        $pdo->prepareResult = $this->getMock('PDOStatement');
 
         $content = 'foobar';
         $stream = $this->createStream($content);
@@ -160,13 +159,10 @@ class PdoSessionHandlerTest extends TestCase
         if (defined('HHVM_VERSION')) {
             $this->markTestSkipped('PHPUnit_MockObject cannot mock the PDOStatement class on HHVM. See https://github.com/sebastianbergmann/phpunit-mock-objects/pull/289');
         }
-        if (ini_get('session.use_strict_mode')) {
-            $this->markTestSkipped('Strict mode needs no locking for new sessions.');
-        }
 
         $pdo = new MockPdo('pgsql');
-        $selectStmt = $this->getMockBuilder('PDOStatement')->getMock();
-        $insertStmt = $this->getMockBuilder('PDOStatement')->getMock();
+        $selectStmt = $this->getMock('PDOStatement');
+        $insertStmt = $this->getMock('PDOStatement');
 
         $pdo->prepareResult = function ($statement) use ($selectStmt, $insertStmt) {
             return 0 === strpos($statement, 'INSERT') ? $insertStmt : $selectStmt;
@@ -272,9 +268,6 @@ class PdoSessionHandlerTest extends TestCase
         $this->assertSame('', $data, 'Destroyed session returns empty string');
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSessionGC()
     {
         $previousLifeTime = ini_set('session.gc_maxlifetime', 1000);

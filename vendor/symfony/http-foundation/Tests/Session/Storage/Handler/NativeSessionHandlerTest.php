@@ -11,7 +11,6 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\Session\Storage\Handler;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeSessionHandler;
 
 /**
@@ -21,13 +20,9 @@ use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeSessionHandle
  *
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
- * @group legacy
  */
-class NativeSessionHandlerTest extends TestCase
+class NativeSessionHandlerTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @expectedDeprecation The Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeSessionHandler class is deprecated since Symfony 3.4 and will be removed in 4.0. Use the \SessionHandler class instead.
-     */
     public function testConstruct()
     {
         $handler = new NativeSessionHandler();

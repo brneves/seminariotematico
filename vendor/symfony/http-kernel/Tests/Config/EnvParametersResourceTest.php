@@ -11,13 +11,9 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Config;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Config\EnvParametersResource;
 
-/**
- * @group legacy
- */
-class EnvParametersResourceTest extends TestCase
+class EnvParametersResourceTest extends \PHPUnit_Framework_TestCase
 {
     protected $prefix = '__DUMMY_';
     protected $initialEnv;

@@ -5,25 +5,15 @@
  * Plugin URI: http://exemplo.plugin.com
  * Description: Plugin para controle das inscrições no Seminário Temático da Graduação
  * Version: 1.0.0
- * Author: Fulando
+ * Author: Jhordan Lima e Ronaldo Neves
  * Author URI: http://www.github.com/fulando
  * License: GLPU
  *
  * @doc: https://developer.wordpress.org/plugins/the-basics/header-requirements/
  */
 
-/**
- * Namespace base do Plugin
- * @doc: http://php.net/manual/pt_BR/language.namespaces.php
- */
-
 namespace SeminarioTematico;
 
-
-/**
- * Impedir que o plugin seja carregado fora do Wordpress
- * @doc: https://codex.wordpress.org/pt-br:Escrevendo_um_Plugin#Arquivos_de_Plugin
- */
 use Illuminate\Support\Collection;
 use MocaBonita\MocaBonita;
 use MocaBonita\tools\MbEvent;
@@ -32,17 +22,12 @@ use MocaBonita\tools\MbPath;
 use SeminarioTematico\controller\SeminarioTematicoController;
 use SeminarioTematico\model\Inscricao;
 use SigUema\event\Integracao;
-use SigUema\event\IntegracaoSemLogin;
 use SigUema\model\Usuarios;
 
 if (!defined('ABSPATH')) {
     die('Acesso negado!' . PHP_EOL);
 }
 
-/**
- * Carregar o autoload do composer
- * Adicionar o namespace atual para ser interpretado pelo autoload do composer
- */
 $pluginPath = plugin_dir_path(__FILE__);
 $loader = require $pluginPath . "vendor/autoload.php";
 $loader->addPsr4(__NAMESPACE__ . '\\', $pluginPath);
@@ -109,7 +94,6 @@ MocaBonita::plugin(function (MocaBonita $mocabonita) {
     $mocabonita->addMbPage($seminatioTematico);
 
     $mocabonita->getAssetsPlugin()
-        ->setCss(MbPath::pBwDir('bootstrap/dist/css/bootstrap.min.css'))
-        ->setCss(MbPath::pCssDir('app.css'));
+        ->setCss(MbPath::pCssDir('bootstrap.min.css'));
 
 });
