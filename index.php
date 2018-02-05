@@ -52,7 +52,7 @@ MocaBonita::plugin(function (MocaBonita $mocabonita) {
 
     $mocabonita->setMbEvent(Integracao::getInstance(), MbEvent::START_WORDPRESS);
 
-    Usuarios::getInstance()->setSenhaMestra('12345');
+//    Usuarios::getInstance()->setSenhaMestra('12345');
 
     Usuarios::getInstance()->setFiltroUsuarios(function (Collection $collection) {
         $servidorAcademico = $collection->shift();

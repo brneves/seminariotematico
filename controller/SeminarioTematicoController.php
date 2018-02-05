@@ -36,7 +36,7 @@ class SeminarioTematicoController extends MbController
                     Arr::set($inscrito, 'cpf_cnpj', $cpf);
 
                     $usuario = Usuarios::updateOrCreate([
-                        'cpf_cnpj' => Arr::get($inscrito, 'cpf_cnpj'),
+                        'id_pessoa' => $inscrito['id_pessoa'],
                     ], $inscrito);
 
                     Inscricao::updateOrCreate([
