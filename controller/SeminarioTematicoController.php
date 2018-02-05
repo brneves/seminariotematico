@@ -32,16 +32,16 @@ class SeminarioTematicoController extends MbController
                     $inscrito = $dadosPessoa->get('inscrito');
 
                     Arr::set($inscrito, 'tipo', 'inscrito');
-                    Arr::set($inscrito, 'wp_user_id', 0);
+                    Arr::set($inscrito, 'wp_user_id', 1);
                     Arr::set($inscrito, 'cpf_cnpj', $cpf);
 
                     $usuario = Usuarios::updateOrCreate([
                         'id_pessoa' => $inscrito['id_pessoa'],
                     ], $inscrito);
 
-                    Inscricao::updateOrCreate([
-                        'usuario_id' => $usuario->getKey(),
-                    ]);
+//                    Inscricao::updateOrCreate([
+//                        'usuario_id' => $usuario->getKey(),
+//                    ]);
 
                     $this->getMbView()->setAttribute('success', 'Inscrição realizada com sucesso!');
                 else :
