@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "87b2832e628d7968efc2edd61452a0e2",
+    "content-hash": "481b7b9317ab5c2bd067487f0da81427",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -419,16 +419,16 @@
         },
         {
             "name": "jaybizzle/crawler-detect",
-            "version": "v1.2.56",
+            "version": "v1.2.57",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-                "reference": "fb89599ea8b113b31683419e87461d07ff84aa0e"
+                "reference": "2f1502a434baad1da0fa43c3f3e2b09504fa6b81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/fb89599ea8b113b31683419e87461d07ff84aa0e",
-                "reference": "fb89599ea8b113b31683419e87461d07ff84aa0e",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/2f1502a434baad1da0fa43c3f3e2b09504fa6b81",
+                "reference": "2f1502a434baad1da0fa43c3f3e2b09504fa6b81",
                 "shasum": ""
             },
             "require": {
@@ -464,7 +464,7 @@
                 "crawlerdetect",
                 "php crawler detect"
             ],
-            "time": "2018-01-31T19:47:49+00:00"
+            "time": "2018-02-03T12:01:03+00:00"
         },
         {
             "name": "jenssegers/agent",
@@ -1382,6 +1382,6 @@
     "platform": [],
     "platform-dev": [],
     "platform-overrides": {
-        "php": "5.5.9"
+        "php": "5.6"
     }
 }

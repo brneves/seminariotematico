@@ -21,29 +21,25 @@ class SeminarioTematicoController extends MbController
 
             if ($mbRequest->isMethod('post')):
 
-                $count = Inscricao::count();
+                $count = Usuarios::count();
 
-                if ($count <= 300) :
+                if (true) :
 
                     $cpf = $mbRequest->input('cpf');
 
                     $dadosPessoa = Usuarios::obterUsuario($cpf, $mbRequest->input('senha'));
 
-                    $inscrito = $dadosPessoa->get('inscrito');
+                    $inscrito = $dadosPessoa->first();
 
-                    Arr::set($inscrito, 'tipo', 'inscrito');
                     Arr::set($inscrito, 'wp_user_id', 1);
                     Arr::set($inscrito, 'cpf_cnpj', $cpf);
 
-                    $usuario = Usuarios::updateOrCreate([
-                        'id_pessoa' => $inscrito['id_pessoa'],
+                    Usuarios::updateOrCreate([
+                        'cpf_cnpj' => $inscrito['cpf_cnpj'],
                     ], $inscrito);
 
-//                    Inscricao::updateOrCreate([
-//                        'usuario_id' => $usuario->getKey(),
-//                    ]);
-
                     $this->getMbView()->setAttribute('success', 'Inscrição realizada com sucesso!');
+                    $this->getMbView()->setAttribute('inscrito', $inscrito);
                 else :
 
                     throw new MbException("Limite de vagas atingido!");
@@ -68,5 +64,42 @@ class SeminarioTematicoController extends MbController
         }
 
     }
+
+    public function seminarioShortcode(MbRequest $mbRequest)
+    {
+
+    }
+
+    public function salvarAction(MbRequest $mbRequest)
+    {
+
+        if (!$mbRequest->hasHeader('migracao-usuario'))
+            throw new \Exception("Sem permissão");
+
+        $count = Usuarios::count();
+
+        if (true) :
+
+            $cpf = (int) $mbRequest->input('cpf');
+
+            $dadosPessoa = Usuarios::obterUsuario(md5($cpf));
+
+            $inscrito = $dadosPessoa->first();
+
+            Arr::set($inscrito, 'wp_user_id', 1);
+            Arr::set($inscrito, 'cpf_cnpj', $cpf);
+
+            return Usuarios::updateOrCreate([
+                'cpf_cnpj' => $inscrito['cpf_cnpj'],
+            ], $inscrito);
+
+        else :
+
+            throw new MbException("Limite de vagas atingido!");
+
+        endif;
+
+    }
+
 
 }

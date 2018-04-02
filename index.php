@@ -17,8 +17,10 @@ namespace SeminarioTematico;
 use Illuminate\Support\Collection;
 use MocaBonita\MocaBonita;
 use MocaBonita\tools\MbEvent;
+use MocaBonita\tools\MbException;
 use MocaBonita\tools\MbPage;
 use MocaBonita\tools\MbPath;
+use SeminarioTematico\controller\SeminarioGraduacaoController;
 use SeminarioTematico\controller\SeminarioTematicoController;
 use SeminarioTematico\model\Inscricao;
 use SigUema\event\Integracao;
@@ -52,16 +54,21 @@ MocaBonita::plugin(function (MocaBonita $mocabonita) {
 
     $mocabonita->setMbEvent(Integracao::getInstance(), MbEvent::START_WORDPRESS);
 
-//    Usuarios::getInstance()->setSenhaMestra('12345');
-
     Usuarios::getInstance()->setFiltroUsuarios(function (Collection $collection) {
-        $servidorAcademico = $collection->shift();
 
-        while (!$collection->isEmpty()) {
-            $collection->shift();
-        }
+        $collection->each(function ($dados, $tipo) use ($collection) {
 
-        $collection->put('inscrito', $servidorAcademico);
+            if (is_null($dados)) {
+                $collection->offsetUnset($tipo);
+            } else {
+                $collection->put($tipo, $dados + ['tipo' => $tipo]);
+            }
+
+        });
+
+        if ($collection->isEmpty()):
+            throw new MbException("Usuário inválido");
+        endif;
     });
 
     /**
@@ -76,7 +83,13 @@ MocaBonita::plugin(function (MocaBonita $mocabonita) {
     $seminatioTematico->setMenuPosition(1)
         ->setDashicon('dashicons-admin-site')
         ->setRemovePageSubmenu()
+        ->setSlug('seminario-tematico')
         ->setController(SeminarioTematicoController::class);
+
+    $seminatioTematico->addMbAction('salvar')
+        ->setRequiresMethod('POST')
+        ->setRequiresLogin(false)
+        ->setRequiresAjax(true);
 
     /**
      * Caso seu plugin precise de um shortcode, você pdoe adiciona-lo associando à página.
@@ -86,12 +99,28 @@ MocaBonita::plugin(function (MocaBonita $mocabonita) {
      */
     $mocabonita->addMbShortcode('seminario_tematico', $seminatioTematico, 'index');
 
+
+    $seminarioGraduacao = MbPage::create('Seminário Caminhos da Graduação');
+
+    $seminarioGraduacao->setMenuPosition(2)
+        ->setRemovePageSubmenu()
+        ->setSlug('seminario-graduacao')
+        ->setController(SeminarioGraduacaoController::class);
+
+    $seminarioGraduacao->addMbAction('salvar')
+        ->setRequiresMethod('POST')
+        ->setRequiresLogin(false)
+        ->setRequiresAjax(true);
+
+    $mocabonita->addMbShortcode('seminario_caminhos', $seminarioGraduacao, 'index');
+
     /**
      * Após finalizar todas as configurações da página, podemos adiciona-las ao MocaBonita para que elas possam ser
      * usadas pelo Wordpress. Caso uma página não seja adicionada, apenas os shortcodes relacionados a ela serão
      * executados.
      */
     $mocabonita->addMbPage($seminatioTematico);
+    $mocabonita->addMbPage($seminarioGraduacao);
 
     $mocabonita->getAssetsPlugin()
         ->setCss(MbPath::pCssDir('bootstrap.min.css'));

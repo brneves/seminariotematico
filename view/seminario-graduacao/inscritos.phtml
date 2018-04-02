@@ -1,0 +1,31 @@
+<?php
+
+if (!defined('ABSPATH') || !$this instanceof \MocaBonita\view\MbView) :
+    die("Você não tem permissão para acessar este arquivo!");
+endif;
+?>
+
+<h1>Inscritos</h1>
+
+<table class="wp-list-table widefat fixed striped posts">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Campus</th>
+        <th>Sexo</th>
+        <th>Principal Queixa</th>
+        <td>Data de preenchimento</td>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->getAttribute('inscritos') as $inscrito): var_dump($inscrito); ?>
+    <tr>
+        <td><?php ?></td>
+        <td><?php ?></td>
+        <td><?php ?></td>
+        <td></td>
+    </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

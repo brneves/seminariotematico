@@ -1,0 +1,52 @@
+<div id="login-access" class="tab-pane fade active in animated shake">
+
+
+    <?php if($this->inscrito): ?>
+
+    <p>Você pode <strong>imprimir</strong> ou <strong>salvar</strong> seu comprovante de inscrição</p>
+    <p><a class="btn btn-primary btn-lg" style="color: #fff;" href="<?= plugin_dir_url(__FILE__); ?>comprovante.php?1=<?= base64_encode($this->inscrito['cpf_cnpj']); ?>&2=<?= base64_encode($this->inscrito['nome']) ?>" title="Abrir comprovante de inscrição" target="_blank">Abrir comprovante de inscrição</a></p>
+
+    <?php else: ?>
+
+    <p>Para realizar sua inscrição basta informar seu CPF e senha do SigUEMA. Vagas limitadas.</p>
+
+    <form name="acessoSiguema" method="post" autocomplete="off" novalidate>
+
+        <img src="http://www.prog.uema.br/wp-content/uploads/2018/04/3536c127-0aa5-4ff5-a42d-2948f4172c12.jpg" alt="Seminário Caminhos da Graduação">
+
+        <div class="form-group">
+            <label for="login">C.P.F.:</label>
+
+            <input class="form-control"
+                   type="text"
+                   name="cpf"
+                   id="cpf"
+                   required
+                   placeholder="C.P.F."
+                  />
+        </div>
+
+        <div class="form-group">
+            <label for="senha">Senha:</label>
+
+            <input type="password"
+                   class="form-control"
+                   name="senha"
+                   id="senha"
+                   required
+                   placeholder="Senha"
+                  />
+        </div>
+
+        <br/>
+
+        <div class="form-group ">
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Realizar Inscrição</button>
+        </div>
+    </form>
+
+    <?php
+    endif;
+    ?>
+
+</div>
